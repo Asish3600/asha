@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asha ice-cream Ice Cream</title>
+    <style>
+        :root {
+            --primary: #FF9BB3; /* Pink */
+            --secondary: #A5DEE4; /* Mint */
+            --dark: #000000;    /* Black */
+            --light: #FFE6EE;  /* Light pink */
+            --whatsapp: #25D366;
+            --whatsapp-hover: #128C7E;
+        }
+        
+        /* Welcome Message Styles */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .welcome-message {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 80%;
+            border: 3px solid var(--primary);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        .welcome-message h2 {
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 24px;
+        }
+        
+        .welcome-message p {
+            color: var(--dark);
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .welcome-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+        
+        .welcome-btn:hover {
+            background-color: #ff85a2;
+            transform: scale(1.05);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+            background-color: var(--light);
+            padding-top: 80px; /* Add padding to account for fixed header */
+        }
+        
+        /* Sticky Navigation - Updated for full width */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: var(--primary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            width: 100%; /* Make it span full width */
+            z-index: 1000;
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav li {
+            margin-left: 30px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: white;
+        }
+        
+        /* Image Slider */
+        .slider {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 0;
+        }
+        
+        .slides {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+        
+        .slide {
+            width: 33.33%;
+            height: 100%;
+        }
+        
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .slider-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        
+        .slider-dot.active {
+            background: white;
+        }
+        
+        main {
+            padding-top: 20px;
+        }
+        
+        .section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .flavors {
+            background-color: rgba(255, 230, 238, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 50px auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .flavor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .flavor-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .flavor-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .flavor-img {
+            width: 100%;
+            object-fit: cover;
+            height: 250px;
+        }
+        
+        /* Specific size for Strawberry Cheesecake */
+        .flavor-card:nth-child(1) .flavor-img {
+            height: 200px;
+        }
+        
+        .flavor-info {
+            padding: 20px;
+        }
+        
+        .order-btn {
+            display: inline-block;
+            background-color: var(--whatsapp);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        
+        .order-btn:hover {
+            background-color: var(--whatsapp-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        .contact {
+            background-color: white;
+            border-radius: 15px;
+            padding: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 50px auto;
+        }
+        
+        .contact-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--whatsapp);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: var(--whatsapp-hover);
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: var(--dark);
+            padding: 30px 5%;
+            text-align: center;
+        }
+        
+        .whatsapp-contact {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 15px;
+            color: var(--dark);
+            text-decoration: none;
+        }
+        
+        .whatsapp-contact img {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .slider {
+                height: 300px;
+            }
+            
+            .flavor-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .flavor-card:nth-child(1) .flavor-img,
+            .flavor-card:nth-child(2) .flavor-img,
+            .flavor-card:nth-child(3) .flavor-img {
+                height: 180px;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            nav li {
+                margin-left: 15px;
+            }
+            
+            .welcome-message {
+                padding: 20px;
+            }
+            
+            .welcome-message h2 {
+                font-size: 20px;
+            }
+            
+            .welcome-message p {
+                font-size: 16px;
+            }
+            
+            .logo-img {
+                height: 40px;
+            }
+            
+            .logo-text {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-container {
+                gap: 8px;
+            }
+            
+            .logo-img {
+                height: 35px;
+            }
+            
+            .logo-text {
+                font-size: 18px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Welcome Message -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-message">
+            <h2>Welcome to Asha ice-cream Ice Cream!</h2>
+            <p>"LOVE IS SWEET BUT OUR ICECREAM IS MORE SWEETER" ❤️🍦</p>
+            <button class="welcome-btn" onclick="closeWelcome()">Let's Scoop Some Happiness!</button>
+        </div>
+    </div>
+
+    <!-- Sticky Navigation with Home link - Updated structure -->
+    <div class="nav-container">
+        <div class="nav-content">
+            <div class="logo-container">
+                <img src="https://i.ibb.co/0jZR8Yy/ice-cream-logo.png" alt="Asha ice-cream Logo" class="logo-img">
+                <div class="logo-text">Asha ice-cream</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#flavors">Flavors</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    
+    <!-- Image Slider with home section -->
+    <section id="home">
+        <div class="slider">
+            <div class="slides">
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1557&q=80" alt="Ice Cream Variety">
+                </div>
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Colorful Ice Cream">
+                </div>
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1488900128323-21503983a07e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80" alt="Ice Cream Shop">
+                </div>
+            </div>
+            <div class="slider-nav">
+                <div class="slider-dot active" onclick="goToSlide(0)"></div>
+                <div class="slider-dot" onclick="goToSlide(1)"></div>
+                <div class="slider-dot" onclick="goToSlide(2)"></div>
+            </div>
+        </div>
+    </section>
+    
+    <main>
+        <section id="flavors" class="section flavors">
+            <div class="section-title">
+                <h2>Our Signature Flavors</h2>
+                <p>Try one of our seasonal favorites</p>
+            </div>
+            
+            <div class="flavor-grid">
+                <div class="flavor-card">
+                    <img src="https://images.unsplash.com/photo-1576506295286-5cda18df43e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Strawberry Cheesecake" class="flavor-img">
+                    <div class="flavor-info">
+                        <h3>Strawberry Cheesecake</h3>
+                        <p>Creamy cheesecake ice cream with swirls of fresh strawberry compote.</p>
+                        <a href="https://wa.me/8801912315848?text=I%20want%20to%20order%20Strawberry%20Cheesecake%20Ice%20Cream" class="order-btn">Order Now</a>
+                    </div>
+                </div>
+                
+                <div class="flavor-card">
+                    <img src="https://images.unsplash.com/photo-1532162023155-69d8a91a640b?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80" alt="Salted Caramel" class="flavor-img">
+                    <div class="flavor-info">
+                        <h3>Salted Caramel</h3>
+                        <p>Rich caramel ice cream with a hint of sea salt.</p>
+                        <a href="https://wa.me/8801912315848?text=I%20want%20to%20order%20Salted%20Caramel%20Ice%20Cream" class="order-btn">Order Now</a>
+                    </div>
+                </div>
+                
+                <div class="flavor-card">
+                    <img src="https://images.unsplash.com/photo-1621844401954-76f61adb36db?ixlib=rb-4.0.3&auto=format&fit=crop&w=774&q=80" alt="Matcha Green Tea" class="flavor-img">
+                    <div class="flavor-info">
+                        <h3>Matcha Green Tea</h3>
+                        <p>Premium Japanese matcha blended into smooth ice cream.</p>
+                        <a href="https://wa.me/8801912315848?text=I%20want%20to%20order%20Matcha%20Green%20Tea%20Ice%20Cream" class="order-btn">Order Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="section contact">
+            <div class="contact-info">
+                <h2>Contact Us</h2>
+                <p>We'd love to hear from you!</p>
+            </div>
+            <div style="text-align: center;">
+                <a href="https://wa.me/8801912315848?text=Hi%20Asha%20ice-cream,%20I%20have%20a%20question" class="order-btn" style="display: inline-flex; align-items: center;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="24" style="margin-right: 10px;">
+                    Message Us on WhatsApp
+                </a>
+                <p style="margin-top: 30px;">
+                    <strong>Hours:</strong> Daily 12pm-9pm
+                </p>
+            </div>
+        </section>
+    </main>
+    
+    <a href="https://wa.me/8801912315848?text=Hi%20Asha%20ice-cream,%20I%20want%20to%20place%20an%20order" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="35">
+    </a>
+    
+    <footer>
+        <p>© 2023 Asha ice-cream Ice Cream. All rights reserved.</p>
+        <a href="https://wa.me/8801912315848" class="whatsapp-contact">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+            WhatsApp: +8801912315848
+        </a>
+    </footer>
+
+    <script>
+        // Show welcome message when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if welcome was already shown (using sessionStorage)
+            if (!sessionStorage.getItem('welcomeShown')) {
+                document.getElementById('welcomeOverlay').style.display = 'flex';
+                sessionStorage.setItem('welcomeShown', 'true');
+            } else {
+                document.getElementById('welcomeOverlay').style.display = 'none';
+            }
+        });
+        
+        function closeWelcome() {
+            document.getElementById('welcomeOverlay').style.display = 'none';
+        }
+        
+        // Simple Slider Functionality
+        let currentSlide = 0;
+        const slides = document.querySelector('.slides');
+        const dots = document.querySelectorAll('.slider-dot');
+        
+        function goToSlide(n) {
+            currentSlide = n;
+            updateSlider();
+        }
+        
+        function updateSlider() {
+            slides.style.transform = `translateX(-${currentSlide * 33.33}%)`;
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        // Auto-advance slides every 5 seconds
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % 3;
+            updateSlider();
+        }, 5000);
+    </script>
+</body>
+</html>
